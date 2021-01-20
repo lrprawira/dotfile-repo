@@ -1,0 +1,1 @@
+/home/ccxex29/.config/nvim/postplugin/coc.vim

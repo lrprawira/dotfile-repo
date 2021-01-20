@@ -1,0 +1,5 @@
+Follow VimPlug Instructions for NeoVim beforehand!  
+Create a softlink from /usr/local/share/dotfiles/nvim to ~/.config/
+
+References:
+
