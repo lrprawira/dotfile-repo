@@ -23,14 +23,17 @@ source ./line-numbering.vim
 " Remove default vim mappings I don't personally like
 source ./mod-default-bindings.vim
 
-" Italic Comments
-source ./italic-comments.vim
-
 " VIM Plug
 source ./plug.vim
 
+" CoC
+source ./coc.vim
+
 " NERD
 source ./postplugin/nerd.vim
+
+" CHAD
+source ./postplugin/chad.vim
 
 " Code of Completion (CoC) Config
 source .vim/coc.vim
@@ -41,5 +44,7 @@ source ./postplugin/themeing.vim
 " Status Line Tweaks
 source ./vanilla-behave.vim
 
+" Italic Comments
+source ./italic-comments.vim
 
 " highlight CursorLineNr guifg=#ffffff guibg=#000000 gui=NONE

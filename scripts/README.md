@@ -8,3 +8,4 @@ My Personal Scripts and possibly Configurations for Acer Nitro 5 Running on Manj
 - OwO ASCII Art: [Reddit - "OWO" Neofetch ASCII art](https://www.reddit.com/r/unixporn/comments/98j2ah/ocowo_neofetch_ascii_art/)  
 - Lekensteyn's ACPI Info Script: [Lekensteyn's File Sharing](http://lekensteyn.nl/files/get-acpi-info.sh)  
 - Spectre Meltdown Checker: [Github - speed47's spectre-meltdown-checker repository](https://github.com/speed47/spectre-meltdown-checker/)  
+- 256 Colours Terminal Test: [Github - HaleTom's gist](https://gist.github.com/HaleTom/89ffe32783f89f403bba96bd7bcd1263)

@@ -4,7 +4,8 @@
 
 " Only usable with gVIM, I guess
 " Oh and Alacritty, of course.
-highlight Comment cterm=italic
+" Used this with kitty also. (^°ω°^)
+highlight Comment cterm=italic gui=italic
 set t_ZH=[3m
 set t_ZR=[23m
 

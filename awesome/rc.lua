@@ -58,7 +58,7 @@ require("awful.hotkeys_popup.keys")
 -- Default Apps that is used throughout the rice
 filemanager = "pcmanfm" or "nnn"
 webbrowser = "firefox"
-terminal = "alacritty"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -100,8 +100,8 @@ awful.layout.layouts = {
     awful.layout.suit.tile.left,
     awful.layout.suit.max,
     awful.layout.suit.magnifier,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
+	awful.layout.suit.tile.bottom,
+	awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
@@ -394,6 +394,12 @@ local globalkeys = gears.table.join(
 	      
     -- CUSTOM KEYBINDINGS --
 
+	-- More Functionality?
+    awful.key({ modkey, altkey }, "h", function() awful.spawn("/home/ccxex29/.screenlayout/dual-left-right.sh") end,
+              {description = "Dual Monitor Horizontal", group = "displaylayout"}),
+    awful.key({ modkey, altkey }, "v", function() awful.spawn("/home/ccxex29/.screenlayout/dual-left-tiltedright.sh") end,
+              {description = "Dual Monitor Vertical", group = "displaylayout"}),
+	
     -- More Apps
     awful.key({ modkey }, "c", function() awful.spawn(filemanager) end,
               {description = "file manager", group = "launcher"}),
@@ -652,7 +658,9 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+		  "<unknown>"
+	  },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -664,16 +672,20 @@ awful.rules.rules = {
           "ConfigManager",  -- Thunderbird's about:config.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
-      }, properties = { floating = true }},
-    { rule_any = {
-	name = {
-	  "LINE"
-        }
-      }, properties = { floating = false }},
+      }, 
+	  except = {
+		  class = "LINE"
+	  },
+  	  properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+    { 
+	  rule_any = {type = { "normal", "dialog" }
+      }, 
+	  except = {
+		  class = "<unknown>"
+	  },
+	  properties = { titlebars_enabled = true }
     },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
@@ -738,9 +750,9 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+--client.connect_signal("mouse::enter", function(c)
+    --c:emit_signal("request::activate", "mouse_enter", {raise = false})
+--end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)

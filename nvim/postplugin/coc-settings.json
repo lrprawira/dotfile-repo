@@ -2,6 +2,19 @@
 	"python.pythonPath": "python3",
 	"python.linting.enabled": true,
 	"python.linting.pylintEnabled": true,
+
+	"languageserver": {
+		"clangd": {
+			"command": "clangd",
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+			"filetypes": ["c", "cc", "cxx", "cpp", "C", "c++", "objc", "objcpp"]
+		}
+	},
 	
-	"tsserver.enable": true
+	"tsserver.enable": true,
+
+	"clangd.enabled": true,
+
+	// Omnisharp
+	"omnisharp.version": "v1.37.3"
 }

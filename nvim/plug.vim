@@ -5,7 +5,14 @@
 call plug#begin(fullnvimpath . '/.vim/plugged')
 
 " NERDTree Plugin
-Plug 'preservim/nerdtree'
+"Plug 'preservim/nerdtree'
+
+" CHADTree - File Manager
+Plug 'ms-jpq/chadtree', 
+			\ { 
+			\ 	'branch': 'chad',
+			\ 	'do': 'python3 -m chadtree deps'
+			\ }
 
 " Base16 ColorScheme
 Plug 'chriskempson/base16-vim'
@@ -18,6 +25,9 @@ Plug 'mike-hearn/base16-vim-lightline'
 
 " Last Place
 Plug 'farmergreg/vim-lastplace'
+
+" Polyglot Better Syntax Highlighting
+Plug 'sheerun/vim-polyglot'
 
 " Vim Surround
 Plug 'tpope/vim-surround'
@@ -32,6 +42,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Comment Toggler
 Plug 'preservim/nerdcommenter'
+
+" Dev Icons
+Plug 'ryanoasis/vim-devicons'
 
 " End VIM Plug
 call plug#end()
