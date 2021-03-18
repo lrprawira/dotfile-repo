@@ -58,7 +58,7 @@ require("awful.hotkeys_popup.keys")
 -- Default Apps that is used throughout the rice
 filemanager = "pcmanfm" or "nnn"
 webbrowser = "firefox"
-terminal = "kitty"
+terminal = "kitty -e byobu new-session"
 editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -130,7 +130,7 @@ myawesomemenu = {
    },
    { "reboot computer",
 	 function()
-	   awful.spawn.with_shell("optimus-manager --switch integrated && loginctl reboot")
+	   awful.spawn.with_shell("loginctl reboot")
      end
    },
    { "quit", function() awesome.quit() end },
