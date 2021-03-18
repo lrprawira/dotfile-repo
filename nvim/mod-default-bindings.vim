@@ -23,5 +23,5 @@ cnoremap <Up> <Nop>
 cnoremap <Down> <Nop>
 
 " Easy Terminal Mode
-nmap <silent>t :edit term://zsh<CR>
+nmap <silent><C-t> :edit term://zsh<CR>
 
