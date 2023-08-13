@@ -126,7 +126,6 @@ lvim.plugins = {
     persistence = "persistence",
     config = function()
       require("persistence").setup({
-        dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
         dir = vim.fn.expand(vim.fn.stdpath "state" .. "/sessions/"),
         options = { "buffers", "curdir", "tabpages", "winsize" },
       })
@@ -247,6 +246,29 @@ lvim.plugins = {
         end
       })
     end,
+  },
+  {
+    "ggandor/leap.nvim",
+    name = "leap",
+    config = function()
+      require("leap")
+          .add_default_mappings()
+      -- require("leap")
+      --     .add_repeat_mappings(';', ',', {
+      --       relative_directions = true,
+      --       modes = { 'n', 'x', 'o' },
+      --     })
+    end,
+  },
+  {
+    "ggandor/flit.nvim",
+    name = "flit",
+    dependencies = { "leap" },
+    config = function()
+      require("flit").setup({
+        labeled_modes = "nvo",
+      })
+    end
   }
 }
 
