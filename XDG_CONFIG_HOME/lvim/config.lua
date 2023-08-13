@@ -1,8 +1,9 @@
 --[[
- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
- `lvim` is the global options object
-]]
+  THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
+  `lvim` is the global options object
+ ]]
 -- vim options
+vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
@@ -15,6 +16,7 @@ lvim.format_on_save = {
   pattern = "*.lua",
   timeout = 1000,
 }
+
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -60,6 +62,15 @@ lvim.builtin.treesitter.auto_install = true
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. IMPORTANT: Requires `:LvimCacheReset` to take effect
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
+require("lvim.lsp.manager").setup("pyright", {
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "off"
+      }
+    }
+  }
+})
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
 lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
   return server ~= "rome"
@@ -77,6 +88,11 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 -- local formatters = require "lvim.lsp.null-ls.formatters"
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+  { name = "blue",  filetypes = { "python" } },
+  { name = "djlint" }
+}
 -- formatters.setup {
 --   { command = "stylua" },
 --   {
@@ -86,6 +102,10 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 --   },
 -- }
 -- local linters = require "lvim.lsp.null-ls.linters"
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  { name = "curlylint", filetypes = { "html", "django-html", "htmldjango" } }
+}
 -- linters.setup {
 --   { command = "flake8", filetypes = { "python" } },
 --   {
@@ -107,6 +127,7 @@ lvim.plugins = {
     config = function()
       require("persistence").setup({
         dir = vim.fn.expand(vim.fn.stdpath "config" .. "/session/"),
+        dir = vim.fn.expand(vim.fn.stdpath "state" .. "/sessions/"),
         options = { "buffers", "curdir", "tabpages", "winsize" },
       })
     end,
@@ -238,6 +259,7 @@ lvim.builtin.mason.max_concurrent_installers = 8
 -- nvim-lspconfig
 -- lvim.lsp
 -- nvim-cmp
+-- lvim.keys.insert_mode["<C-@>"] = "<C-Space>"
 -- lvim.builtin.cmp.sources = { {} }
 -- Persistence
 lvim.builtin.which_key.mappings["S"] = {
@@ -276,6 +298,8 @@ lvim.builtin.which_key.mappings["A"] = { "<cmd>AerialToggle left<cr>", "aerial" 
 lvim.builtin.which_key.mappings["n"] = { "<cmd>ASToggle<cr>", "toggle autosave" }
 -- nvim-ts-rainbow
 lvim.builtin.treesitter.rainbow.enable = true
+-- toggleterm
+lvim.builtin.terminal.on_config_done = nil
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
 -- vim.api.nvim_create_autocmd("FileType", {
