@@ -1,0 +1,3 @@
+# LunarVim
+/XDG_CONFIG_HOME/lvim/*
+!/XDG_CONFIG_HOME/lvim/config.lua

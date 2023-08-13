@@ -7,3 +7,7 @@ CustomCompose is derived from [kragen's xcompose configurations](https://github.
 Discord css config requires [BeautifulDiscord](https://github.com/leovoel/BeautifulDiscord)  
 *This configuration is currently broken because of Discord version bump*
 
+XDG directories are supposed to reside in the target XDG directory specs. Read: [XDG Base Directory](https://wiki.archlinux.org/title/XDG_Base_Directory)  
+Supposedly only `XDG_CONFIG_HOME` that is populated, but since some apps might misuse the XDG specs, my dotfile might include those.  
+
+
