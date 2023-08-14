@@ -91,7 +91,7 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { name = "blue",  filetypes = { "python" } },
-  { name = "djlint" }
+  { name = "djlint" },
 }
 -- formatters.setup {
 --   { command = "stylua" },
@@ -104,7 +104,7 @@ formatters.setup {
 -- local linters = require "lvim.lsp.null-ls.linters"
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { name = "curlylint", filetypes = { "html", "django-html", "htmldjango" } }
+  { name = "djlint", filetypes = { "html", "django-html", "htmldjango" } },
 }
 -- linters.setup {
 --   { command = "flake8", filetypes = { "python" } },
