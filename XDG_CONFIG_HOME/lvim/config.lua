@@ -260,21 +260,29 @@ lvim.plugins = {
       --     })
     end,
   },
-  {
-    "ggandor/flit.nvim",
-    name = "flit",
-    dependencies = { "leap" },
-    config = function()
-      require("flit").setup({
-        labeled_modes = "nvo",
-      })
-    end
-  },
+  -- {
+  --   "ggandor/flit.nvim",
+  --   name = "flit",
+  --   dependencies = { "leap" },
+  --   config = function()
+  --     require("flit").setup({
+  --       labeled_modes = "nvo",
+  --     })
+  --   end
+  -- },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
     config = function()
       require("lsp_signature").on_attach()
+    end
+  },
+  {
+    "nvim-orgmode/orgmode",
+    config = function()
+      local orgmode = require('orgmode')
+      orgmode.setup()
+      orgmode.setup_ts_grammar()
     end
   },
 }
@@ -283,6 +291,9 @@ lvim.plugins = {
 -- Custom plugin configurations
 --
 
+-- Treesitter org-mode
+lvim.builtin.treesitter.highlight.additional_vim_regex_highlighting = { 'org' }
+table.insert(lvim.builtin.treesitter.ensure_installed, 'org')
 -- Mason
 lvim.builtin.mason.max_concurrent_installers = 8
 -- nvim-lspconfig
