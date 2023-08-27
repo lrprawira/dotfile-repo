@@ -113,10 +113,6 @@ linters.setup {
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
-	-- {
-	--   "folke/trouble.nvim",
-	--   cmd = "TroubleToggle",
-	-- },
 	{
 		"folke/persistence.nvim",
 		event = "BufReadPre",
@@ -178,6 +174,10 @@ lvim.plugins = {
 		end,
 	},
 	{
+		"mbbill/undotree",
+		event = "BufRead",
+	},
+	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
@@ -200,14 +200,6 @@ lvim.plugins = {
 	-- {
 	--   "RRethy/nvim-base16",
 	--   priority = 1000,
-	-- },
-	-- {
-	--   "wfxr/minimap.vim",
-	--   config = function()
-	--     vim.cmd("let g:minimap_width = 10")
-	--     vim.cmd("let g:minimap_auto_start = 1")
-	--     vim.cmd("let g:minimap_auto_start_win_enter = 1")
-	--   end
 	-- },
 	{
 		"windwp/nvim-ts-autotag",
@@ -260,16 +252,6 @@ lvim.plugins = {
 			--     })
 		end,
 	},
-	-- {
-	--   "ggandor/flit.nvim",
-	--   name = "flit",
-	--   dependencies = { "leap" },
-	--   config = function()
-	--     require("flit").setup({
-	--       labeled_modes = "nvo",
-	--     })
-	--   end
-	-- },
 	{
 		"ray-x/lsp_signature.nvim",
 		event = "BufRead",
