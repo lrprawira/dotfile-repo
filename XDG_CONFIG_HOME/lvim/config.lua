@@ -3,7 +3,6 @@
   `lvim` is the global options object
  ]]
 -- vim options
--- vim.opt.expandtab = true
 vim.opt.expandtab = false
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -72,10 +71,11 @@ require("lvim.lsp.manager").setup("pyright", {
 		}
 	}
 })
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
-lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
-	return server ~= "rome"
-end, lvim.lsp.automatic_configuration.skipped_servers)
+
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
+-- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+--   return server ~= "rome"
+-- end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -90,8 +90,11 @@ end, lvim.lsp.automatic_configuration.skipped_servers)
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 -- local formatters = require "lvim.lsp.null-ls.formatters"
 local formatters = require "lvim.lsp.null-ls.formatters"
+
 formatters.setup {
+	timeout_ms = 3000,
 	{ name = "blue",  filetypes = { "python" } },
+	-- { name = "usort", filetypes = { "python" } }, # Timeout
 	{ name = "djlint" },
 }
 -- formatters.setup {
@@ -102,18 +105,25 @@ formatters.setup {
 --     filetypes = { "typescript", "typescriptreact" },
 --   },
 -- }
--- local linters = require "lvim.lsp.null-ls.linters"
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-	{ name = "djlint", filetypes = { "html", "django-html", "htmldjango" } },
+	{ name = "djlint",  filetypes = { "html", "django-html", "htmldjango" } },
+	{ command = "mypy", filetypes = { "python" } },
+	{
+		command = "ruff",
+		filetypes = { "python" },
+		args = {
+			-- E501 -> Line too long
+			-- F403 -> Wildcard import
+			-- F405 -> Use fn from wildcard import
+			"--ignore=E501,F403,F405"
+		}
+	},
+	{
+		command = "shellcheck",
+		args = { "--severity", "warning" },
+	},
 }
--- linters.setup {
---   { command = "flake8", filetypes = { "python" } },
---   {
---     command = "shellcheck",
---     args = { "--severity", "warning" },
---   },
--- }
 
 -- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
 lvim.plugins = {
@@ -143,6 +153,28 @@ lvim.plugins = {
 		end,
 	},
 	{
+		"rmagatti/goto-preview",
+		config = function()
+			require('goto-preview').setup({
+				width = 120,
+				height = 25,
+				default_mappings = false,
+				debug = false,
+				opacity = nil,
+				post_open_hook = nil,
+			})
+		end
+	},
+	{ "nvim-treesitter/nvim-treesitter-textobjects", event = "BufRead" },
+	-- {
+	-- 	"kylechui/nvim-surround",
+	-- 	version = "*",
+	-- 	event = "VeryLazy",
+	-- 	config = function()
+	-- 		require('nvim-surround').setup({})
+	-- 	end
+	-- },
+	{
 		"ethanholz/nvim-lastplace",
 		event = "BufRead",
 		config = function()
@@ -154,10 +186,6 @@ lvim.plugins = {
 				lastplace_open_folds = true,
 			})
 		end,
-	},
-	{
-		"mbbill/undotree",
-		event = "BufRead",
 	},
 	{
 		"catppuccin/nvim",
