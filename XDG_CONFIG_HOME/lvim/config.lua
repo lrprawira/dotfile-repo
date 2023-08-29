@@ -90,9 +90,11 @@ require("lvim.lsp.manager").setup("pyright", {
 -- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
 -- local formatters = require "lvim.lsp.null-ls.formatters"
 local formatters = require "lvim.lsp.null-ls.formatters"
+
 formatters.setup {
+	timeout_ms = 3000,
 	{ name = "blue",  filetypes = { "python" } },
-	{ name = "usort", filetypes = { "python" } },
+	-- { name = "usort", filetypes = { "python" } }, # Timeout
 	{ name = "djlint" },
 }
 -- formatters.setup {
