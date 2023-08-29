@@ -71,6 +71,7 @@ require("lvim.lsp.manager").setup("pyright", {
 		}
 	}
 })
+
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
 -- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
 --   return server ~= "rome"
@@ -91,6 +92,7 @@ require("lvim.lsp.manager").setup("pyright", {
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
 	{ name = "blue",  filetypes = { "python" } },
+	{ name = "usort", filetypes = { "python" } },
 	{ name = "djlint" },
 }
 -- formatters.setup {
@@ -105,6 +107,16 @@ local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
 	{ name = "djlint",  filetypes = { "html", "django-html", "htmldjango" } },
 	{ command = "mypy", filetypes = { "python" } },
+	{
+		command = "ruff",
+		filetypes = { "python" },
+		args = {
+			-- E501 -> Line too long
+			-- F403 -> Wildcard import
+			-- F405 -> Use fn from wildcard import
+			"--ignore=E501,F403,F405"
+		}
+	},
 	{
 		command = "shellcheck",
 		args = { "--severity", "warning" },
@@ -172,10 +184,6 @@ lvim.plugins = {
 				lastplace_open_folds = true,
 			})
 		end,
-	},
-	{
-		"mbbill/undotree",
-		event = "BufRead",
 	},
 	{
 		"catppuccin/nvim",
