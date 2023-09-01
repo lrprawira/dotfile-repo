@@ -277,17 +277,32 @@ lvim.plugins = {
 			orgmode.setup_ts_grammar()
 		end
 	},
+	{
+
+	},
+	{
+		'kristijanhusak/vim-dadbod-ui',
+	},
+	{
+		'kristijanhusak/vim-dadbod-completion',
+	},
 }
 
 --
 -- Custom plugin configurations
 --
 
--- Treesitter org-mode
+-- Treesitter
 lvim.builtin.treesitter.highlight.additional_vim_regex_highlighting = { 'org' }
 table.insert(lvim.builtin.treesitter.ensure_installed, 'org')
+table.insert(lvim.builtin.treesitter.ensure_installed, 'sql')
 -- Mason
 lvim.builtin.mason.max_concurrent_installers = 8
+-- Dadbod
+lvim.builtin.which_key.mappings['D'] = {
+	name = "Database",
+	B = { "<cmd>DBUIToggle<cr>", "Toggle database UI" },
+}
 -- nvim-lspconfig
 -- lvim.lsp
 -- nvim-cmp
@@ -310,16 +325,8 @@ lvim.builtin.which_key.mappings["c"] = {}
 lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
 lvim.builtin.which_key.mappings["w"] = {}
 lvim.builtin.which_key.mappings["bw"] = { "<cmd>w!<cr>", "Save Buffer" }
--- TroubleToggle
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "Diagnostics",
---   t = { "<cmd>TroubleToggle<cr>", "trouble" },
---   w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
---   d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
---   q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
---   l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
---   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
--- }
+-- No quit on leader shortcut
+lvim.builtin.which_key.mappings["q"] = {}
 -- AerialToggle
 lvim.builtin.which_key.mappings["A"] = { "<cmd>AerialToggle left<cr>", "aerial" }
 -- lvim.builtin.which_key.mappings["A"] = {
@@ -327,7 +334,7 @@ lvim.builtin.which_key.mappings["A"] = { "<cmd>AerialToggle left<cr>", "aerial" 
 --   t = { "<cmd>AerialToggle left<CR>", "aerial" }
 -- }
 -- AutoSave
-lvim.builtin.which_key.mappings["n"] = { "<cmd>ASToggle<cr>", "toggle autosave" }
+lvim.builtin.which_key.mappings["Ln"] = { "<cmd>ASToggle<cr>", "toggle autosave" }
 -- nvim-ts-rainbow
 lvim.builtin.treesitter.rainbow.enable = true
 -- toggleterm
