@@ -18,7 +18,7 @@ lvim.colorscheme = "catppuccin"
 	]]
 lvim.log.level = "info"
 lvim.format_on_save = {
-	enabled = true,
+	enabled = false,
 	pattern = "*.lua",
 	timeout = 1000,
 }
