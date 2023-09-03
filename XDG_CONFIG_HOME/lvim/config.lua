@@ -13,6 +13,7 @@ vim.opt.shell = "/bin/bash"
 -- Change theme settings
 lvim.colorscheme = "catppuccin"
 
+
 --[[
 	LunarVim Config
 	]]
@@ -86,6 +87,7 @@ lvim.builtin.treesitter.auto_install = true
 -- -- always installed on startup, useful for parsers without a strict filetype
 -- lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
 
+
 --[[
 	LSP SETUP (NVIM-LSPCONFIG)
 	<https://www.lunarvim.org/docs/languages#lsp-support>
@@ -127,6 +129,7 @@ require("lvim.lsp.manager").setup("pyright", {
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
+
 --[[
 	FORMATTER SETUP (NULL-LS)
 	<https://www.lunarvim.org/docs/languages#lintingformatting>
@@ -143,6 +146,7 @@ formatters.setup {
 		filetypes = { "typescript", "typescriptreact" },
 	},
 }
+
 
 --[[
 	LINTER SETUP (NULL-LS)
@@ -167,6 +171,7 @@ linters.setup {
 		args = { "--severity", "warning" },
 	},
 }
+
 
 --[[
 	LAZY PLUGINS DECLARATION
@@ -245,7 +250,7 @@ lvim.plugins = {
 		version = "*",
 		event = "VeryLazy",
 		config = function()
-	-- 		require('nvim-surround').setup({})
+			-- 		require('nvim-surround').setup({})
 		end
 	},
 	{
@@ -345,6 +350,7 @@ lvim.plugins = {
 	},
 }
 
+
 --[[
 	PLUGIN CONFIGURATIONS
   ]]
@@ -356,7 +362,6 @@ table.insert(lvim.builtin.treesitter.ensure_installed, 'sql')
 
 -- Mason
 lvim.builtin.mason.max_concurrent_installers = 8
-
 
 -- Bufferline
 lvim.builtin.bufferline.after = "catppuccin"
@@ -371,7 +376,12 @@ lvim.builtin.treesitter.rainbow.enable = true
 -- toggleterm
 lvim.builtin.terminal.on_config_done = nil
 
--- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
+
+--[[
+	Autocommands
+	(`:help autocmd`)
+	<https://neovim.io/doc/user/autocmd.html>
+  ]]
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "zsh",
 --   callback = function()
