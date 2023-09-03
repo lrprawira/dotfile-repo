@@ -137,6 +137,11 @@ formatters.setup {
 	{ name = "blue",  filetypes = { "python" } },
 	-- { name = "usort", filetypes = { "python" } }, # Timeout
 	{ name = "djlint" },
+	{
+		command = "prettier",
+		extra_args = { "--print-width", "100" },
+		filetypes = { "typescript", "typescriptreact" },
+	},
 }
 
 --[[
