@@ -272,7 +272,7 @@ lvim.plugins = {
 				--   light = "latte",
 				--   dark = "frappe",
 				-- },
-				-- transparent_background: false,
+				transparent_background = false,
 				show_end_of_buffer = true,
 				term_colors = false,
 				integrations = {
@@ -332,14 +332,6 @@ lvim.plugins = {
 		event = "BufRead",
 		config = function()
 			require("lsp_signature").on_attach()
-		end
-	},
-	{
-		"nvim-orgmode/orgmode",
-		config = function()
-			local orgmode = require('orgmode')
-			orgmode.setup()
-			orgmode.setup_ts_grammar()
 		end
 	},
 	{
