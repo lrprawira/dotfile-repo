@@ -3,16 +3,16 @@
   `lvim` is the global options object
  ]]
 
+
 -- vim options
-vim.opt.expandtab = false
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
+vim.opt.expandtab = false
 vim.opt.relativenumber = true
 vim.opt.shell = "/bin/bash"
 
 -- Change theme settings
 lvim.colorscheme = "catppuccin"
-
 
 --[[
 	LunarVim Config
@@ -46,11 +46,14 @@ lvim.use_icons = true
 
 lvim.leader = "space"
 
--- Buffer
+-- Remove unwanted mappings
 lvim.builtin.which_key.mappings["c"] = {}
-lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
 lvim.builtin.which_key.mappings["w"] = {}
+
+-- Buffer
+lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
 lvim.builtin.which_key.mappings["bw"] = { "<cmd>w!<cr>", "Save Buffer" }
+lvim.builtin.which_key.mappings["br"] = { "<cmd>redraw<cr>", "Refresh Buffer" }
 
 -- No quit on leader shortcut
 lvim.builtin.which_key.mappings["q"] = {}
