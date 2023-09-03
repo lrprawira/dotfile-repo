@@ -2,6 +2,7 @@
   THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
   `lvim` is the global options object
  ]]
+
 -- vim options
 vim.opt.expandtab = false
 vim.opt.shiftwidth = 2
@@ -9,7 +10,12 @@ vim.opt.tabstop = 2
 vim.opt.relativenumber = true
 vim.opt.shell = "/bin/bash"
 
--- general
+-- Change theme settings
+lvim.colorscheme = "catppuccin"
+
+--[[
+	LunarVim Config
+	]]
 lvim.log.level = "info"
 lvim.format_on_save = {
 	enabled = true,
@@ -17,30 +23,61 @@ lvim.format_on_save = {
 	timeout = 1000,
 }
 
--- to disable icons and use a minimalist setup, uncomment the following
--- lvim.use_icons = false
-
--- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
-lvim.leader = "space"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-
--- -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-
--- -- Change theme settings
-lvim.colorscheme = "catppuccin"
-
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+lvim.use_icons = true
 
+
+--[[
+  Keymappings
+	<https://www.lunarvim.org/docs/configuration/keybindings>
+	]]
+
+-- Examples:
+-- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+-- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+-- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+-- lvim.builtin.which_key.mappings["W"] = { "<cmd>noautocmd w<cr>", "Save without formatting" }
+-- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+
+lvim.leader = "space"
+
+-- Buffer
+lvim.builtin.which_key.mappings["c"] = {}
+lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
+lvim.builtin.which_key.mappings["w"] = {}
+lvim.builtin.which_key.mappings["bw"] = { "<cmd>w!<cr>", "Save Buffer" }
+
+-- No quit on leader shortcut
+lvim.builtin.which_key.mappings["q"] = {}
+
+-- AerialToggle
+lvim.builtin.which_key.mappings["A"] = { "<cmd>AerialToggle left<cr>", "aerial" }
+
+-- AutoSave
+lvim.builtin.which_key.mappings["Ln"] = { "<cmd>ASToggle<cr>", "toggle autosave" }
+
+-- Dadbod
+lvim.builtin.which_key.mappings['D'] = {
+	name = "Database",
+	B = { "<cmd>DBUIToggle<cr>", "Toggle database UI" },
+}
+
+-- Persistence
+lvim.builtin.which_key.mappings["S"] = {
+	name = "Session",
+	c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
+	l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
+	Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
+}
+
+
+--[[
+	TREE SITTER CONFIG
+  ]]
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
 
@@ -49,7 +86,10 @@ lvim.builtin.treesitter.auto_install = true
 -- -- always installed on startup, useful for parsers without a strict filetype
 -- lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "regex" }
 
--- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
+--[[
+	LSP SETUP (NVIM-LSPCONFIG)
+	<https://www.lunarvim.org/docs/languages#lsp-support>
+  ]]
 
 -- --- disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
@@ -87,24 +127,22 @@ require("lvim.lsp.manager").setup("pyright", {
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- -- linters and formatters <https://www.lunarvim.org/docs/languages#lintingformatting>
--- local formatters = require "lvim.lsp.null-ls.formatters"
+--[[
+	FORMATTER SETUP (NULL-LS)
+	<https://www.lunarvim.org/docs/languages#lintingformatting>
+  ]]
 local formatters = require "lvim.lsp.null-ls.formatters"
-
 formatters.setup {
 	timeout_ms = 3000,
 	{ name = "blue",  filetypes = { "python" } },
 	-- { name = "usort", filetypes = { "python" } }, # Timeout
 	{ name = "djlint" },
 }
--- formatters.setup {
---   { command = "stylua" },
---   {
---     command = "prettier",
---     extra_args = { "--print-width", "100" },
---     filetypes = { "typescript", "typescriptreact" },
---   },
--- }
+
+--[[
+	LINTER SETUP (NULL-LS)
+	<https://www.lunarvim.org/docs/languages#lintingformatting>
+  ]]
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
 	{ name = "djlint",  filetypes = { "html", "django-html", "htmldjango" } },
@@ -125,7 +163,10 @@ linters.setup {
 	},
 }
 
--- -- Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
+--[[
+	LAZY PLUGINS DECLARATION
+	Additional Plugins <https://www.lunarvim.org/docs/plugins#user-plugins>
+  ]]
 lvim.plugins = {
 	{
 		"folke/persistence.nvim",
@@ -207,10 +248,6 @@ lvim.plugins = {
 			})
 		end
 	},
-	-- {
-	--   "RRethy/nvim-base16",
-	--   priority = 1000,
-	-- },
 	{
 		"windwp/nvim-ts-autotag",
 		event = "BufRead",
@@ -255,11 +292,6 @@ lvim.plugins = {
 		config = function()
 			require("leap")
 					.add_default_mappings()
-			-- require("leap")
-			--     .add_repeat_mappings(';', ',', {
-			--       relative_directions = true,
-			--       modes = { 'n', 'x', 'o' },
-			--     })
 		end,
 	},
 	{
@@ -288,55 +320,29 @@ lvim.plugins = {
 	},
 }
 
---
--- Custom plugin configurations
---
+--[[
+	PLUGIN CONFIGURATIONS
+  ]]
 
 -- Treesitter
 lvim.builtin.treesitter.highlight.additional_vim_regex_highlighting = { 'org' }
 table.insert(lvim.builtin.treesitter.ensure_installed, 'org')
 table.insert(lvim.builtin.treesitter.ensure_installed, 'sql')
+
 -- Mason
 lvim.builtin.mason.max_concurrent_installers = 8
--- Dadbod
-lvim.builtin.which_key.mappings['D'] = {
-	name = "Database",
-	B = { "<cmd>DBUIToggle<cr>", "Toggle database UI" },
-}
--- nvim-lspconfig
--- lvim.lsp
--- nvim-cmp
--- lvim.keys.insert_mode["<C-@>"] = "<C-Space>"
--- lvim.builtin.cmp.sources = { {} }
--- Persistence
-lvim.builtin.which_key.mappings["S"] = {
-	name = "Session",
-	c = { "<cmd>lua require('persistence').load()<cr>", "Restore last session for current dir" },
-	l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "Restore last session" },
-	Q = { "<cmd>lua require('persistence').stop()<cr>", "Quit without saving session" },
-}
+
+
 -- Bufferline
 lvim.builtin.bufferline.after = "catppuccin"
 lvim.builtin.bufferline.options.highlight = require('catppuccin.groups.integrations.bufferline')
+
 -- Lualine
 lvim.builtin.lualine.options.theme = "catppuccin"
--- Buffer
-lvim.builtin.which_key.mappings["c"] = {}
-lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
-lvim.builtin.which_key.mappings["w"] = {}
-lvim.builtin.which_key.mappings["bw"] = { "<cmd>w!<cr>", "Save Buffer" }
--- No quit on leader shortcut
-lvim.builtin.which_key.mappings["q"] = {}
--- AerialToggle
-lvim.builtin.which_key.mappings["A"] = { "<cmd>AerialToggle left<cr>", "aerial" }
--- lvim.builtin.which_key.mappings["A"] = {
---   name = "Aerial Outline",
---   t = { "<cmd>AerialToggle left<CR>", "aerial" }
--- }
--- AutoSave
-lvim.builtin.which_key.mappings["Ln"] = { "<cmd>ASToggle<cr>", "toggle autosave" }
+
 -- nvim-ts-rainbow
 lvim.builtin.treesitter.rainbow.enable = true
+
 -- toggleterm
 lvim.builtin.terminal.on_config_done = nil
 
