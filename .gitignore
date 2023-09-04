@@ -1,3 +1,5 @@
 # LunarVim
 /XDG_CONFIG_HOME/lvim/*
 !/XDG_CONFIG_HOME/lvim/config.lua
+# Tmux
+/XDG_CONFIG_HOME/tmux/plugins
