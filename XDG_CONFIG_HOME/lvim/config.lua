@@ -118,10 +118,10 @@ require("lvim.lsp.manager").setup("pyright", {
 	}
 })
 
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "rome"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rome" })
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+	return server ~= "rome"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -142,12 +142,11 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
 	timeout_ms = 3000,
 	{ name = "blue",  filetypes = { "python" } },
-	-- { name = "usort", filetypes = { "python" } }, # Timeout
+	-- { command = "usort", filetypes = { "python" } }, -- Timeout
 	{ name = "djlint" },
 	{
-		command = "prettier",
-		extra_args = { "--print-width", "100" },
-		filetypes = { "typescript", "typescriptreact" },
+		name = "prettier",
+		filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 	},
 }
 
@@ -158,8 +157,16 @@ formatters.setup {
   ]]
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-	{ name = "djlint",  filetypes = { "html", "django-html", "htmldjango" } },
-	{ command = "mypy", filetypes = { "python" } },
+	{ name = "djlint", filetypes = { "html", "django-html", "htmldjango" } },
+	{
+		command = "mypy",
+		filetypes = { "python" },
+		args = {
+			"--strict",
+			"--python-version",
+			"3.6"
+		}
+	},
 	{
 		command = "ruff",
 		filetypes = { "python" },
@@ -170,10 +177,10 @@ linters.setup {
 			"--ignore=E501,F403,F405"
 		}
 	},
-	{
-		command = "shellcheck",
-		args = { "--severity", "warning" },
-	},
+	-- {
+	-- 	name = "eslint_d",
+	-- 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	-- },
 }
 
 
