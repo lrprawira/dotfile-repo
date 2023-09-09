@@ -1,0 +1,67 @@
+# Common Aliases
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias btm='btm -b --color=nord'
+
+# Default editor to LunarVim
+export EDITOR="lvim"
+
+# Locally-installed packages
+export PATH=$HOME/.local/bin:$PATH
+
+# Yarn globally-installed packages
+export PATH=$(yarn global bin):$PATH
+
+# Use a temp var because PWD might be overridden by the following scripts
+PWD_TEMP="$PWD"
+cd $HOME
+
+# PYENV
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv > /dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# NVM
+source /usr/share/nvm/init-nvm.sh
+
+# RUBY
+export PATH=$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH
+
+# PERL
+PATH="/home/user/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/user/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/user/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/user/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/user/perl5"; export PERL_MM_OPT;
+
+
+# CD back into origin and unset temp var
+cd "$PWD_TEMP"
+unset PWD_TEMP
+
+
+#################
+# Developer QoL #
+#################
+
+# Check time
+alias now='date +%s'
+alias nowms='echo $(date +%s)$(date +%N | head -c3)'
+alias nowns='echo $(date +%s)$(date +%N)'
+
+# Django
+alias manage.py='python manage.py' # Run manage.py without shell shebang exec
+
+# PyEnv
+mv -f -- "$HOME/.python-version" "/tmp/.python-version.deleted.$(now)" 2>/dev/null # Prevent pyenv local from poisoning the home directory
+
+# MyCLI PyEnv
+unalias mycli 2> /dev/null # Prevent alias pointing to itself upon re-sourcing
+run_mycli() {
+  ARGS="$@"
+  ORIG_PYENV_PY_VER=$(pyenv version-name)
+  pyenv shell 3.11
+  mycli $ARGS
+  pyenv shell $ORIG_PYENV_PY_VER
+}
+alias mycli='run_mycli'
