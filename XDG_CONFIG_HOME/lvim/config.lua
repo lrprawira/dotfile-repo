@@ -3,7 +3,6 @@
   `lvim` is the global options object
  ]]
 
-
 -- vim options
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -54,6 +53,8 @@ lvim.builtin.which_key.mappings["w"] = {}
 lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
 lvim.builtin.which_key.mappings["bw"] = { "<cmd>w!<cr>", "Save Buffer" }
 lvim.builtin.which_key.mappings["br"] = { "<cmd>redraw<cr>", "Refresh Buffer" }
+lvim.builtin.which_key.mappings["bx"] = { "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr><cmd>BufferKill<cr>",
+	"Kill All Context Buffers" }
 
 -- No quit on leader shortcut
 lvim.builtin.which_key.mappings["q"] = {}
@@ -117,10 +118,10 @@ require("lvim.lsp.manager").setup("pyright", {
 	}
 })
 
--- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" })
--- lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
---   return server ~= "rome"
--- end, lvim.lsp.automatic_configuration.skipped_servers)
+-- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rome" })
+lvim.lsp.automatic_configuration.skipped_servers = vim.tbl_filter(function(server)
+	return server ~= "rome"
+end, lvim.lsp.automatic_configuration.skipped_servers)
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -141,12 +142,11 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
 	timeout_ms = 3000,
 	{ name = "blue",  filetypes = { "python" } },
-	-- { name = "usort", filetypes = { "python" } }, # Timeout
+	-- { command = "usort", filetypes = { "python" } }, -- Timeout
 	{ name = "djlint" },
 	{
-		command = "prettier",
-		extra_args = { "--print-width", "100" },
-		filetypes = { "typescript", "typescriptreact" },
+		name = "prettier",
+		filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 	},
 }
 
@@ -157,8 +157,16 @@ formatters.setup {
   ]]
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-	{ name = "djlint",  filetypes = { "html", "django-html", "htmldjango" } },
-	{ command = "mypy", filetypes = { "python" } },
+	{ name = "djlint", filetypes = { "html", "django-html", "htmldjango" } },
+	{
+		command = "mypy",
+		filetypes = { "python" },
+		args = {
+			"--strict",
+			"--python-version",
+			"3.6"
+		}
+	},
 	{
 		command = "ruff",
 		filetypes = { "python" },
@@ -169,10 +177,10 @@ linters.setup {
 			"--ignore=E501,F403,F405"
 		}
 	},
-	{
-		command = "shellcheck",
-		args = { "--severity", "warning" },
-	},
+	-- {
+	-- 	name = "eslint_d",
+	-- 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	-- },
 }
 
 
@@ -355,15 +363,35 @@ lvim.plugins = {
 			require("lsp_signature").on_attach()
 		end
 	},
+	-- {
+	-- 	"nvim-neorg/neorg",
+	-- 	build = ":Neorg sync-parsers",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	config = function()
+	-- 		require("neorg").setup {
+	-- 			load = {
+	-- 				["core.defaults"] = {},  -- Loads default behaviour
+	-- 				["core.concealer"] = {}, -- Adds pretty icons to your documents
+	-- 				["core.dirman"] = {      -- Manages Neorg workspaces
+	-- 					config = {
+	-- 						workspaces = {
+	-- 							notes = "~/Notes",
+	-- 						},
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 		}
+	-- 	end,
+	-- },
 	{
 		'tpope/vim-dadbod',
 	},
 	{
 		'kristijanhusak/vim-dadbod-ui',
 	},
-	{
-		'kristijanhusak/vim-dadbod-completion',
-	},
+	-- {
+	-- 	'kristijanhusak/vim-dadbod-completion',
+	-- },
 }
 
 
@@ -405,3 +433,16 @@ lvim.builtin.terminal.on_config_done = nil
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+
+-- vim-dadbod-completion
+-- lvim.autocommands = {
+-- 	{
+-- 		"FileType",
+-- 		{
+-- 			pattern = { "sql", "mysql", "plsql" },
+-- 			callback = function()
+-- 				require('nvim-cmp').setup.buffer({ sources = { { name = 'vim-dadbod-completion' } } })
+-- 			end
+-- 		}
+-- 	},
+-- }
