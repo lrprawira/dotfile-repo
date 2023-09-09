@@ -3,7 +3,6 @@
   `lvim` is the global options object
  ]]
 
-
 -- vim options
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -54,6 +53,8 @@ lvim.builtin.which_key.mappings["w"] = {}
 lvim.builtin.which_key.mappings["bc"] = { "<cmd>BufferKill<cr>", "Close Buffer" }
 lvim.builtin.which_key.mappings["bw"] = { "<cmd>w!<cr>", "Save Buffer" }
 lvim.builtin.which_key.mappings["br"] = { "<cmd>redraw<cr>", "Refresh Buffer" }
+lvim.builtin.which_key.mappings["bx"] = { "<cmd>BufferLineCloseLeft<cr><cmd>BufferLineCloseRight<cr><cmd>BufferKill<cr>",
+	"Kill All Context Buffers" }
 
 -- No quit on leader shortcut
 lvim.builtin.which_key.mappings["q"] = {}
