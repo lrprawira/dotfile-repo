@@ -361,9 +361,9 @@ lvim.plugins = {
 	{
 		'kristijanhusak/vim-dadbod-ui',
 	},
-	{
-		'kristijanhusak/vim-dadbod-completion',
-	},
+	-- {
+	-- 	'kristijanhusak/vim-dadbod-completion',
+	-- },
 }
 
 
@@ -405,3 +405,16 @@ lvim.builtin.terminal.on_config_done = nil
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
+
+-- vim-dadbod-completion
+-- lvim.autocommands = {
+-- 	{
+-- 		"FileType",
+-- 		{
+-- 			pattern = { "sql", "mysql", "plsql" },
+-- 			callback = function()
+-- 				require('nvim-cmp').setup.buffer({ sources = { { name = 'vim-dadbod-completion' } } })
+-- 			end
+-- 		}
+-- 	},
+-- }
