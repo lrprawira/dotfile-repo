@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Service
+Icon=gpg
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=inode/directory;
+Actions=decrypt;
+Encoding=UTF-8
+
+[Desktop Action decrypt]
+Name=Decrypt Directory
+Icon=gpg
+#Exec=konsole -e "notify-send $(realpath .)"
+Exec=$HOME/.local/share/kservices5/ServiceMenus/directory_gocryptfs_utils/decrypt_and_mount.sh
+#Exec=[ -f %f/gocryptfs.conf ] && [ -f %f/gocryptfs.diriv ] && mkdir -p %f.dec && konsole -e 'sh -c "echo Decrypting %f; gocryptfs %f %f.dec || $(rmdir %f.dec; kdialog --error WrongPassword)"' || kdialog --error 'Invalid GoCryptFS Directory!'

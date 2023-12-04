@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Service
+Icon=gpg
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=inode/directory;
+Actions=decrypt;
+Encoding=UTF-8
+
+[Desktop Action decrypt]
+Name=Unmount Decrypted Directory
+Icon=gpg
+Exec=fusermount -u %f && rmdir %f
