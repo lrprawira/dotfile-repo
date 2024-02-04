@@ -19,18 +19,26 @@ mkdir -p "$CTLSOCK_DIR"
 MSG_DEC="Decrypting ${CWD}"
 MSG_INVALID_DIR="$CWD is not a valid GocryptFS directory!"
 
-EVAL_TO_MOUNT="sh -c \"echo \\\"${MSG_DEC}\\\"; \
-	gocryptfs -ctlsock \\\"$CTLSOCK_TARGET\\\" \\\"$CWD\\\" \\\"${MOUNT_TARGET}\\\" || \$(rmdir \\\"${MOUNT_TARGET}\\\"; kdialog --error WrongPassword)\""
 echo "$EVAL_TO_MOUNT"
 
+config_path="${CWD}/gocryptfs.conf"
 
 notify-send "$CWD"
 
-if [ ! -f "${CWD}/gocryptfs.conf" ] || [ ! -f "${CWD}/gocryptfs.diriv" ]; then
+if [ ! -f "${config_path}" ]; then
+	notify-send "Using alternate config_path"
+	config_path="${MOUNT_DIR}/config/${DIR_NAME}.conf"
+fi
+
+EVAL_TO_MOUNT="sh -c \"echo \\\"${MSG_DEC}\\\"; \
+	gocryptfs -config \\\"${config_path}\\\" -ctlsock \\\"${CTLSOCK_TARGET}\\\" \\\"$CWD\\\" \\\"${MOUNT_TARGET}\\\" || \$(rmdir \\\"${MOUNT_TARGET}\\\"; kdialog --error WrongPassword)\""
+
+if [ ! -f ${config_path} ] || [ ! -f "${CWD}/gocryptfs.diriv" ]; then
   echo "$MSG_INVALID_DIR"
   kdialog --error "$MSG_INVALID_DIR"
   exit 255
 fi
+
 
 notify-send "Valid!"
 
