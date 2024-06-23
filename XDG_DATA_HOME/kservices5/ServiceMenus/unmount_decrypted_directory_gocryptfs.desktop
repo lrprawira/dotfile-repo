@@ -9,4 +9,4 @@ Encoding=UTF-8
 [Desktop Action decrypt]
 Name=Unmount Decrypted Directory
 Icon=gpg
-Exec=fusermount -u %f && rmdir %f
+Exec=$HOME/.local/share/kservices5/ServiceMenus/directory_gocryptfs_utils/unmount_decrypted_mount.sh
