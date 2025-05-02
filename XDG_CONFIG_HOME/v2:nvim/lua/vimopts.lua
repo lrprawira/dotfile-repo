@@ -1,0 +1,16 @@
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.smartcase = true
+vim.opt.smarttab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.termguicolors = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.showmode = false -- Hide mode info on status bar
+vim.g.mapleader = " "
+vim.g.loaded_netrw = true
+vim.g.loaded_netrwPlugin = 1
+
