@@ -70,18 +70,21 @@ return {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.6',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzf-native.nvim' },
-    lazy = true,
+    -- lazy = true,
     cmd = { "Telescope" },
     config = function()
       require('telescope')
           .load_extension('fzf')
     end
   },
-  {
-    'folke/trouble.nvim',
-    event = "BufReadPost",
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-  },
+  -- {
+  --   'folke/trouble.nvim',
+  --   event = "BufReadPost",
+  --   lazy = true,
+  --   cmd = { "Trouble" },
+  --   dependencies = { 'nvim-tree/nvim-web-devicons' },
+  --   opts = {},
+  -- },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -311,7 +314,7 @@ return {
         mapping = cmp.mapping.preset.insert({
           ['<Tab>'] = function(fallback)
             if not cmp.select_next_item() then
-              if vim.bo.buftype ~= 'prompt' and has_words_before() then
+              if vim.bo.buftype ~= 'prompt' and require('helpers').has_words_before() then
                 cmp.complete()
               else
                 fallback()
@@ -320,7 +323,7 @@ return {
           end,
           ['<S-Tab>'] = function(fallback)
             if not cmp.select_prev_item() then
-              if vim.bo.buftype ~= 'prompt' and has_words_before() then
+              if vim.bo.buftype ~= 'prompt' and require('helpers').has_words_before() then
                 cmp.complete()
               else
                 fallback()
