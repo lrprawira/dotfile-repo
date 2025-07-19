@@ -102,25 +102,21 @@ wk.register({
 }, { prefix = "g", mode = "n" })
 
 -- Pane management
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<C-j>', '<C-w>j')
-vim.keymap.set('n', '<C-k>', '<C-w>k')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
-vim.keymap.set('n', '<C-Left>', '<Cmd>vertical resize -2<CR>')
-vim.keymap.set('n', '<C-Down>', '<Cmd>resize +2<CR>')
-vim.keymap.set('n', '<C-Up>', '<Cmd>resize -2<CR>')
-vim.keymap.set('n', '<C-Right>', '<Cmd>vertical resize +2<CR>')
+vim.keymap.set({ 'n', 't' }, '<C-h>', '<C-w>h')
+vim.keymap.set({ 'n', 't' }, '<C-j>', '<C-w>j')
+vim.keymap.set({ 'n', 't' }, '<C-k>', '<C-w>k')
+vim.keymap.set({ 'n', 't' }, '<C-l>', '<C-w>l')
+vim.keymap.set({ 'n', 't' }, '<C-Left>', '<Cmd>vertical resize -2<CR>')
+vim.keymap.set({ 'n', 't' }, '<C-Down>', '<Cmd>resize +2<CR>')
+vim.keymap.set({ 'n', 't' }, '<C-Up>', '<Cmd>resize -2<CR>')
+vim.keymap.set({ 'n', 't' }, '<C-Right>', '<Cmd>vertical resize +2<CR>')
 
 -- Toggleterm
-vim.keymap.set('n', '<M-3>', '<Cmd>ToggleTerm direction=float<CR>')
-vim.keymap.set('n', '<M-2>', '<Cmd>ToggleTerm direction=vertical size=80<CR>')
-vim.keymap.set('n', '<M-1>', '<Cmd>ToggleTerm direction=horizontal size=20<CR>')
-vim.keymap.set('t', '<M-3>', '<Cmd>ToggleTerm direction=float<CR>')
-vim.keymap.set('t', '<M-2>', '<Cmd>ToggleTerm direction=vertical size=80<CR>')
-vim.keymap.set('t', '<M-1>', '<Cmd>ToggleTerm direction=horizontal size=20<CR>')
+vim.keymap.set({ 'n', 't' }, '<M-3>', '<Cmd>ToggleTerm direction=float<CR>')
+vim.keymap.set({ 'n', 't' }, '<M-2>', '<Cmd>ToggleTerm direction=vertical size=80<CR>')
+vim.keymap.set({ 'n', 't' }, '<M-1>', '<Cmd>ToggleTerm direction=horizontal size=20<CR>')
 -- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 
 -- Keep selection upon shifts
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
-
