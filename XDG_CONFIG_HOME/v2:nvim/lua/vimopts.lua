@@ -13,4 +13,4 @@ vim.opt.showmode = false -- Hide mode info on status bar
 vim.g.mapleader = " "
 vim.g.loaded_netrw = true
 vim.g.loaded_netrwPlugin = 1
-
+vim.o.winborder = 'rounded'
