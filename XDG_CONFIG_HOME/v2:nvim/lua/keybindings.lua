@@ -95,10 +95,12 @@ wk.register({
   ["/"] = { "<Plug>(comment_toggle_linewise_visual)<CR>", "Toggle comment for the selected block" },
 }, { prefix = "<leader>", mode = "v" })
 
+-- For doing things in the context of current line
 wk.register({
   r = { "<Cmd>lua require('telescope.builtin').lsp_references({})<CR>", "Show references" },
-  d = { "<Cmd>lua require('telescope.builtin').lsp_definitions({})<CR>", "Show definitions"},
-  s = { "<Cmd>lua require('telescope.builtin').lsp_document_symbols({})<CR>", "Show document symbols"},
+  d = { "<Cmd>lua require('telescope.builtin').lsp_definitions({})<CR>", "Show definitions" },
+  s = { "<Cmd>lua require('telescope.builtin').lsp_document_symbols({})<CR>", "Show document symbols" },
+  l = { "<Cmd>lua vim.diagnostic.open_float()<CR>", "Show line diagnostics" },
 }, { prefix = "g", mode = "n" })
 
 -- Pane management
