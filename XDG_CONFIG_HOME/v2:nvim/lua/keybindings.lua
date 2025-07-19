@@ -70,6 +70,7 @@ wk.register({
     f = { "<Cmd>lua vim.lsp.buf.format()<CR>", "Format" },
     j = { "<Cmd>lua vim.diagnostic.goto_next()<CR>", "Next diagnostic" },
     k = { "<Cmd>lua vim.diagnostic.goto_prev()<CR>", "Next diagnostic" },
+    s = { "<Cmd>lua vim.diagnostic."}
   },
   [';'] = {
     name = "Editor",
@@ -90,7 +91,8 @@ wk.register({
 }, { prefix = "<leader>" })
 
 wk.register({
-  ["/"] = { "<Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())", "Toggle comment for the selected block" }
+  -- ["/"] = { "<Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", "Toggle comment for the selected block" }
+  ["/"] = { "<Plug>(comment_toggle_linewise_visual)<CR>", "Toggle comment for the selected block" },
 }, { prefix = "<leader>", mode = "v" })
 
 wk.register({

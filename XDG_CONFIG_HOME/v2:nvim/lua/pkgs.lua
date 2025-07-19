@@ -256,56 +256,121 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     event = "BufReadPre",
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = {
+      { "williamboman/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
+    opts = {},
+    -- config = function()
+    --   local config = require("mason-lspconfig")
+    --   config.setup({
+    --     automatic_installation = true
+    --   })
+    -- local mason_lspconfig = require("mason-lspconfig")
+    -- mason_lspconfig.setup_handlers({
+    --   function(server)
+    --     require('lspconfig')[server].setup({})
+    --   end,
+    --   ["lua_ls"] = function()
+    --     lspconfig.lua_ls.setup({
+    --       settings = {
+    --         Lua = {
+    --           diagnostics = {
+    --             globals = {
+    --               "vim",
+    --             }
+    --           },
+    --         }
+    --       }
+    --     })
+    --   end
+    -- })
+    -- end,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    version = false,
+    event = {
+      "InsertEnter",
+      "CmdlineEnter",
+    },
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+    },
     config = function()
-      local config = require("mason-lspconfig")
-      config.setup({
-        automatic_installation = true
+      local cmp = require('cmp')
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.snippet.expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<Tab>'] = function(fallback)
+            if not cmp.select_next_item() then
+              if vim.bo.buftype ~= 'prompt' and has_words_before() then
+                cmp.complete()
+              else
+                fallback()
+              end
+            end
+          end,
+          ['<S-Tab>'] = function(fallback)
+            if not cmp.select_prev_item() then
+              if vim.bo.buftype ~= 'prompt' and has_words_before() then
+                cmp.complete()
+              else
+                fallback()
+              end
+            end
+          end,
+          ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-j>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete({}),
+          -- ['<Esc>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+        }),
       })
     end,
   },
   {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    event = "BufReadPost",
-    dependencies = { "williamboman/mason.nvim" },
-    cmd = { "MasonToolsInstall", "MasonToolsUpdate", "MasonToolsClean" },
-  },
-  {
-    "hrsh7th/cmp-nvim-lsp"
-  },
-  {
-    "hrsh7th/nvim-cmp"
-  },
-  {
     "neovim/nvim-lspconfig",
     lazy = true,
-    dependencies = { "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim", "hrsh7th/cmp-nvim-lsp" },
+    dependencies = { "williamboman/mason.nvim", "hrsh7th/nvim-cmp" },
     config = function()
       local lspconfig = require('lspconfig')
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
+            diagnostics = {
+              globals = {
+                "vim",
+                "require",
+              },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
       lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
         'force',
         lspconfig.util.default_config.capabilities,
         require("cmp_nvim_lsp").default_capabilities()
       )
-      local mason_lspconfig = require("mason-lspconfig")
-      mason_lspconfig.setup_handlers({
-        function(server)
-          require('lspconfig')[server].setup({})
-        end,
-        ["lua_ls"] = function()
-          lspconfig.lua_ls.setup({
-            settings = {
-              Lua = {
-                diagnostics = {
-                  globals = {
-                    "vim",
-                  }
-                },
-              }
-            }
-          })
-        end
-      })
     end
   },
   {
@@ -419,5 +484,5 @@ return {
     config = function()
       require("toggleterm").setup()
     end,
-  }
+  },
 }
