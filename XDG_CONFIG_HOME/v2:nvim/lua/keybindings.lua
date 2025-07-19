@@ -27,11 +27,17 @@ deregister({
   "gN", -- search backwards then select
   "gt", -- goto next tab
   "gT", -- goto previous tab
+  "gri", -- vim.lsp.buf.implementation()
+  "gra", -- vim.lsp.buf.code_action()
+  "grr", -- vim.lsp.buf.references()
+  "grn", -- vim.lsp.buf.rename()
+  "gc", -- toggle comment
+  "gcc", -- toggle comment line
 }, "")
 
 wk.register({
   ["/"] = {
-    "<Plug>(comment_toggle_linewise_current)", "Toggle comment for current line"
+    "<Cmd>lua require('Comment.api').toggle.linewise.current()<CR>", "Toggle comment for current line"
   },
   e = {
     "<Cmd>NvimTreeToggle<CR>", "Open NvimTree"
@@ -56,8 +62,8 @@ wk.register({
   g = {
     name = "Git",
     g = { "<Cmd>LazyGit<CR>", "LazyGit" },
-    l = { "<Cmd>lua require 'gitsigns'.blame_line()<CR>", "Git blame line"},
-    L = { "<Cmd>lua require 'gitsigns'.blame_line({full=true})<CR>", "Git blame line (full)"},
+    l = { "<Cmd>lua require('gitsigns').blame_line()<CR>", "Git blame line"},
+    L = { "<Cmd>lua require('gitsigns').blame_line({full=true})<CR>", "Git blame line (full)"},
   },
   l = {
     game = "LSP",
@@ -65,22 +71,35 @@ wk.register({
     j = { "<Cmd>lua vim.diagnostic.goto_next()<CR>", "Next diagnostic" },
     k = { "<Cmd>lua vim.diagnostic.goto_prev()<CR>", "Next diagnostic" },
   },
-  L = {
+  [';'] = {
     name = "Editor",
     ch = {
       name = "Check health",
       t = { "<Cmd>checkhealth telescope<CR>", "Telescope" },
     },
-    cc = { "<Cmd>edit $HOME/.config/nvim/init.lua<CR>", "Open config init.lua", }
+    cc = { "<Cmd>edit $HOME/.config/nvim/init.lua<CR>", "Open config init.lua", },
+    cs = { "<Cmd>lua require('telescope.builtin').colorscheme({ enable_preview = true })<CR>", "Show colorscheme options" }
+  },
+  S = {
+    name = "Session",
+    c = { "<Cmd>lua require('persistence').load()<CR>", "Restore last session for current dir" },
+    l = { "<Cmd>lua require('persistence').load({ last = true })<CR>", "Restore last session" },
+    q = { "<Cmd>quitall<CR>", "Quit session"},
+    Q = { "<Cmd>lua require('persistence').stop()<CR>", "Quit without saving session" },
   },
 }, { prefix = "<leader>" })
+
 wk.register({
-  ["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Toggle comment for the selected block" }
+  ["/"] = { "<Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())", "Toggle comment for the selected block" }
 }, { prefix = "<leader>", mode = "v" })
+
 wk.register({
-  r = { "<Cmd>lua require('telescope.builtin').lsp.references<CR>", "Show references" },
+  r = { "<Cmd>lua require('telescope.builtin').lsp_references({})<CR>", "Show references" },
+  d = { "<Cmd>lua require('telescope.builtin').lsp_definitions({})<CR>", "Show definitions"},
+  s = { "<Cmd>lua require('telescope.builtin').lsp_document_symbols({})<CR>", "Show document symbols"},
 }, { prefix = "g", mode = "n" })
 
+-- Pane management
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
@@ -89,3 +108,17 @@ vim.keymap.set('n', '<C-Left>', '<Cmd>vertical resize -2<CR>')
 vim.keymap.set('n', '<C-Down>', '<Cmd>resize +2<CR>')
 vim.keymap.set('n', '<C-Up>', '<Cmd>resize -2<CR>')
 vim.keymap.set('n', '<C-Right>', '<Cmd>vertical resize +2<CR>')
+
+-- Toggleterm
+vim.keymap.set('n', '<M-3>', '<Cmd>ToggleTerm direction=float<CR>')
+vim.keymap.set('n', '<M-2>', '<Cmd>ToggleTerm direction=vertical size=80<CR>')
+vim.keymap.set('n', '<M-1>', '<Cmd>ToggleTerm direction=horizontal size=20<CR>')
+vim.keymap.set('t', '<M-3>', '<Cmd>ToggleTerm direction=float<CR>')
+vim.keymap.set('t', '<M-2>', '<Cmd>ToggleTerm direction=vertical size=80<CR>')
+vim.keymap.set('t', '<M-1>', '<Cmd>ToggleTerm direction=horizontal size=20<CR>')
+-- vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
+
+-- Keep selection upon shifts
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
+

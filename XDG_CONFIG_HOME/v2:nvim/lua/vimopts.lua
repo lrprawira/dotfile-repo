@@ -1,6 +1,6 @@
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-vim.opt.smartcase = true
+vim.opt.ignorecase = true
 vim.opt.smarttab = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
