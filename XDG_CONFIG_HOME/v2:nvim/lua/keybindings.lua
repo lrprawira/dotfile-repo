@@ -70,7 +70,7 @@ wk.register({
     f = { "<Cmd>lua vim.lsp.buf.format()<CR>", "Format" },
     j = { "<Cmd>lua vim.diagnostic.goto_next()<CR>", "Next diagnostic" },
     k = { "<Cmd>lua vim.diagnostic.goto_prev()<CR>", "Next diagnostic" },
-    s = { "<Cmd>lua vim.diagnostic."}
+    s = { "<Cmd>lua require('telescope.builtin').diagnostics({bufnr = 0})<CR>", "Show buffer diagnostics" },
   },
   [';'] = {
     name = "Editor",
@@ -85,7 +85,7 @@ wk.register({
     name = "Session",
     c = { "<Cmd>lua require('persistence').load()<CR>", "Restore last session for current dir" },
     l = { "<Cmd>lua require('persistence').load({ last = true })<CR>", "Restore last session" },
-    q = { "<Cmd>quitall<CR>", "Quit session"},
+    q = { "<Cmd>quitall<CR>", "Quit session" },
     Q = { "<Cmd>lua require('persistence').stop()<CR>", "Quit without saving session" },
   },
 }, { prefix = "<leader>" })
