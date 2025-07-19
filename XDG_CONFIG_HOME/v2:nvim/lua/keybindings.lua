@@ -19,20 +19,21 @@ local function deregister(mappings, prefix, mode)
 end
 
 deregister({
-  "g%", -- cycle backwards through results (?)
-  "gf", -- goto file under cursor
-  "gi", -- move to last insert then get into insert mode
-  "gv", -- move to last insert then get into visual mode
-  "gn", -- search forward then select
-  "gN", -- search backwards then select
-  "gt", -- goto next tab
-  "gT", -- goto previous tab
+  "g%",  -- cycle backwards through results (?)
+  "gf",  -- goto file under cursor
+  "gi",  -- move to last insert then get into insert mode
+  "gv",  -- move to last insert then get into visual mode
+  "gn",  -- search forward then select
+  "gN",  -- search backwards then select
+  "gt",  -- goto next tab
+  "gT",  -- goto previous tab
   "gri", -- vim.lsp.buf.implementation()
   "gra", -- vim.lsp.buf.code_action()
   "grr", -- vim.lsp.buf.references()
   "grn", -- vim.lsp.buf.rename()
-  "gc", -- toggle comment
+  "gc",  -- toggle comment
   "gcc", -- toggle comment line
+  "gO",  -- document symbols
 }, "")
 
 wk.register({
@@ -62,8 +63,8 @@ wk.register({
   g = {
     name = "Git",
     g = { "<Cmd>LazyGit<CR>", "LazyGit" },
-    l = { "<Cmd>lua require('gitsigns').blame_line()<CR>", "Git blame line"},
-    L = { "<Cmd>lua require('gitsigns').blame_line({full=true})<CR>", "Git blame line (full)"},
+    l = { "<Cmd>lua require('gitsigns').blame_line()<CR>", "Git blame line" },
+    L = { "<Cmd>lua require('gitsigns').blame_line({full=true})<CR>", "Git blame line (full)" },
   },
   l = {
     game = "LSP",
