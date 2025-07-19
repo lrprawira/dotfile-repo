@@ -33,7 +33,7 @@ fi
 EVAL_TO_MOUNT="sh -c \"echo \\\"${MSG_DEC}\\\"; \
 	gocryptfs -config \\\"${config_path}\\\" -ctlsock \\\"${CTLSOCK_TARGET}\\\" \\\"$CWD\\\" \\\"${MOUNT_TARGET}\\\" || \$(rmdir \\\"${MOUNT_TARGET}\\\"; kdialog --error WrongPassword)\""
 
-if [ ! -f ${config_path} ] || [ ! -f "${CWD}/gocryptfs.diriv" ]; then
+if [ ! -f "${config_path}" ] || [ ! -f "${CWD}/gocryptfs.diriv" ]; then
   echo "$MSG_INVALID_DIR"
   kdialog --error "$MSG_INVALID_DIR"
   exit 255
