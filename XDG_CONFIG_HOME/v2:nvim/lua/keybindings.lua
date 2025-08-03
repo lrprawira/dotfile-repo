@@ -36,73 +36,73 @@ deregister({
   "gO",  -- document symbols
 }, "")
 
-wk.register({
-  ["/"] = {
-    "<Cmd>lua require('Comment.api').toggle.linewise.current()<CR>", "Toggle comment for current line"
-  },
-  e = {
-    "<Cmd>NvimTreeToggle<CR>", "Open NvimTree"
-  },
-  f = {
-    "<Cmd>Telescope fd<CR>", "Find File"
-  },
-  c = {
-    name = "Code",
-    h = { "<Cmd>nohlsearch<CR>", "Remove highlights" },
-  },
-  b = {
-    name = "Buffer",
-    n = { "<Cmd>BufferNext<CR>", "Next Buffer" },
-    p = { "<Cmd>BufferPrevious<CR>", "Previous Buffer" },
-    c = { "<Cmd>BufferClose<CR>", "Close Buffer" },
-    x = { "<Cmd>BufferCloseAllButPinned<CR>", "Close All Buffers" },
-    ["'"] = { "<Cmd>BufferPin<CR>", "Pin Buffer" },
-    f = { "<Cmd>Telescope buffers<CR>", "Find Buffer" },
-    r = { "<Cmd>redraw<CR>", "Redraw Buffer" },
-  },
-  g = {
-    name = "Git",
-    g = { "<Cmd>LazyGit<CR>", "LazyGit" },
-    l = { "<Cmd>lua require('gitsigns').blame_line()<CR>", "Git blame line" },
-    L = { "<Cmd>lua require('gitsigns').blame_line({full=true})<CR>", "Git blame line (full)" },
-  },
-  l = {
-    game = "LSP",
-    f = { "<Cmd>lua vim.lsp.buf.format()<CR>", "Format" },
-    j = { "<Cmd>lua vim.diagnostic.goto_next()<CR>", "Next diagnostic" },
-    k = { "<Cmd>lua vim.diagnostic.goto_prev()<CR>", "Next diagnostic" },
-    s = { "<Cmd>lua require('telescope.builtin').diagnostics({bufnr = 0})<CR>", "Show buffer diagnostics" },
-  },
-  [';'] = {
-    name = "Editor",
-    ch = {
-      name = "Check health",
-      t = { "<Cmd>checkhealth telescope<CR>", "Telescope" },
-    },
-    cc = { "<Cmd>edit $HOME/.config/nvim/init.lua<CR>", "Open config init.lua", },
-    cs = { "<Cmd>lua require('telescope.builtin').colorscheme({ enable_preview = true })<CR>", "Show colorscheme options" }
-  },
-  S = {
-    name = "Session",
-    c = { "<Cmd>lua require('persistence').load()<CR>", "Restore last session for current dir" },
-    l = { "<Cmd>lua require('persistence').load({ last = true })<CR>", "Restore last session" },
-    q = { "<Cmd>quitall<CR>", "Quit session" },
-    Q = { "<Cmd>lua require('persistence').stop()<CR>", "Quit without saving session" },
-  },
-}, { prefix = "<leader>" })
+wk.add({
+  -- Comment
+  { [[<leader>/]], function() require('Comment.api').toggle.linewise.current() end, desc = "Toggle comment for current line", },
+  -- Explorer
+  { [[<leader>e]], "<Cmd>NvimTreeToggle<CR>", desc = "Toggle NvimTree", icon = { icon = "", }, },
+  -- Find file by name
+  { [[<leader>f]], "<Cmd>Telescope fd<CR>", desc = "Find File", },
+  -- Code
+  { [[<leader>c]], group = "Code", },
+  { [[<leader>ch]], "<Cmd>nohlsearch<CR>", desc = "Remove highlights", },
+  { [[<leader>cs]], group = "Search" },
+  { [[<leader>cst]], "<Cmd>Telescope live_grep<CR>", desc = "Text in project" },
+  -- Buffer
+  { [[<leader>b]], group = "Buffer" },
+  { [[<leader>bn]], "<Cmd>BufferNext<CR>", desc = "Next buffer" },
+  { [[<leader>bp]], "<Cmd>BufferPrevious<CR>", desc = "Previous buffer" },
+  { [[<leader>bc]], "<Cmd>BufferClose<CR>", desc = "Close buffer" },
+  { [[<leader>bC]], "<Cmd>BufferClose!<CR>", desc = "Force close buffer" },
+  { [[<leader>bx]], "<Cmd>BufferCloseAllButPinned<CR>", desc = "Close all buffers" },
+  { [[<leader>bX]], "<Cmd>BufferCloseAllButPinned!<CR>", desc = "Force close all buffers" },
+  { [[<leader>b']], "<Cmd>BufferPin<CR>", desc = "Pin buffer" },
+  { [[<leader>bf]], "<Cmd>Telescope buffers<CR>", desc = "Find buffer" },
+  { [[<leader>br]], "<Cmd>redraw<CR>", desc = "Redraw buffer" },
+  -- Git
+  { [[<leader>g]], group = "Git" },
+  { [[<leader>gg]], "<Cmd>LazyGit<CR>", desc = "LazyGit" },
+  { [[<leader>gl]], function() require('gitsigns').blame_line() end, desc = "LazyGit" },
+  { [[<leader>gL]], function() require('gitsigns').blame_line({full=true}) end, desc = "LazyGit" },
+  -- LSP
+  { [[<leader>l]], group = "LSP", icon = { icon = "" } },
+  { [[<leader>lf]], function() vim.lsp.buf.format() end, desc = "Format" },
+  { [[<leader>lj]], function() vim.diagnostic.jump({ count=1, float=true }) end, desc = "Next diagnostic" },
+  { [[<leader>lk]], function() vim.diagnostic.jump({ count=-1, float=true }) end, desc = "Previous diagnostic" },
+  { [[<leader>ls]], function() require('telescope.builtin').diagnostics({bufnr = 0}) end, desc = "Show buffer diagnostics" },
+  -- Editor
+  { [[<leader>;]], group = "Editor", icon = { icon = "󰢱" } },
+  { [[<leader>;ch]], group = "Check health" },
+  { [[<leader>;cha]], "<Cmd>checkhealth<CR>", desc = "All" },
+  { [[<leader>;cht]], "<Cmd>checkhealth telescope<CR>", desc = "Telescope" },
+  { [[<leader>;cc]], "<Cmd>edit $HOME/.config/nvim/init.lua<CR>", desc = "Open config init.lua" },
+  { [[<leader>;cs]], function() require("telescope.builtin").colorscheme({ enable_preview = true }) end, desc = "Show colourscheme options" },
+  -- Session
+  { [[<leader>S]], group = "Session" },
+  { [[<leader>Sc]], function() require("persistence").load() end, desc = "Restore last session for current dir" },
+  { [[<leader>Sl]], function() require("persistence").load({ last = true }) end, desc = "Restore last session" },
+  { [[<leader>Sq]], "<Cmd>quitall<CR>", desc = "Quit session" },
+  { [[<leader>SQ]], function() require("persistence").stop() end, desc = "Quit without saving session" },
 
-wk.register({
+  --
+  mode = {"n"},
+})
+
+wk.add({
+  -- Comment
   -- ["/"] = { "<Cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", "Toggle comment for the selected block" }
-  ["/"] = { "<Plug>(comment_toggle_linewise_visual)<CR>", "Toggle comment for the selected block" },
-}, { prefix = "<leader>", mode = "v" })
+  { [[/]], "<Plug>(comment_toggle_linewise_visual)<CR>", desc = "Toggle comment for the selected block" },
+  mode = {"v"},
+})
 
 -- For doing things in the context of current line
-wk.register({
-  r = { "<Cmd>lua require('telescope.builtin').lsp_references({})<CR>", "Show references" },
-  d = { "<Cmd>lua require('telescope.builtin').lsp_definitions({})<CR>", "Show definitions" },
-  s = { "<Cmd>lua require('telescope.builtin').lsp_document_symbols({})<CR>", "Show document symbols" },
-  l = { "<Cmd>lua vim.diagnostic.open_float()<CR>", "Show line diagnostics" },
-}, { prefix = "g", mode = "n" })
+wk.add({
+  { [[gr]], function() require("telescope.builtin").lsp_references({}) end, desc = "Show references" },
+  { [[gd]], function() require("telescope.builtin").lsp_definitions({}) end, desc = "Show definitions" },
+  { [[gs]], function() require("telescope.builtin").lsp_document_symbols({}) end, desc = "Show document symbols" },
+  { [[gl]], function() vim.diagnostic.open_float() end, desc = "Show line diagnostics" },
+  mode = {"n"},
+})
 
 -- Pane management
 vim.keymap.set({ 'n', 't' }, [[<C-h>]], [[<C-\><C-n><C-w>h]])

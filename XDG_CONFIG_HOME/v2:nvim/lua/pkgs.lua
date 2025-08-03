@@ -264,88 +264,78 @@ return {
       "neovim/nvim-lspconfig",
     },
     opts = {},
-    -- config = function()
-    --   local config = require("mason-lspconfig")
-    --   config.setup({
-    --     automatic_installation = true
-    --   })
-    -- local mason_lspconfig = require("mason-lspconfig")
-    -- mason_lspconfig.setup_handlers({
-    --   function(server)
-    --     require('lspconfig')[server].setup({})
-    --   end,
-    --   ["lua_ls"] = function()
-    --     lspconfig.lua_ls.setup({
-    --       settings = {
-    --         Lua = {
-    --           diagnostics = {
-    --             globals = {
-    --               "vim",
-    --             }
-    --           },
-    --         }
-    --       }
-    --     })
-    --   end
-    -- })
-    -- end,
+    config = function()
+      local config = require("mason-lspconfig")
+      config.setup({
+        automatic_installation = true,
+        automatic_enable = true,
+        ensure_installed = {},
+        handlers = {
+          function (server)
+            require('lspconfig')[server].setup({})
+          end
+        },
+      })
+      -- local mason_lspconfig = require("mason-lspconfig")
+      -- mason_lspconfig.setup_handlers({
+      --   function(server)
+      --     require('lspconfig')[server].setup({})
+      --   end,
+      --   ["lua_ls"] = function()
+      --     lspconfig.lua_ls.setup({
+      --       settings = {
+      --         Lua = {
+      --           diagnostics = {
+      --             globals = {
+      --               "vim",
+      --             }
+      --           },
+      --         }
+      --       }
+      --     })
+      --   end
+      -- })
+    end,
+    version = '^2.3.0',
   },
   {
-    "hrsh7th/nvim-cmp",
-    version = false,
-    event = {
-      "InsertEnter",
-      "CmdlineEnter",
-    },
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
-    },
-    config = function()
-      local cmp = require('cmp')
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            vim.snippet.expand(args.body)
-          end,
+    "saghen/blink.cmp",
+    version = '1.*',
+    opts = {
+      keymap = {
+        preset = "default",
+        ['<CR>'] = {
+          'accept', 'fallback'
         },
-        mapping = cmp.mapping.preset.insert({
-          ['<Tab>'] = function(fallback)
-            if not cmp.select_next_item() then
-              if vim.bo.buftype ~= 'prompt' and require('helpers').has_words_before() then
-                cmp.complete()
-              else
-                fallback()
-              end
-            end
-          end,
-          ['<S-Tab>'] = function(fallback)
-            if not cmp.select_prev_item() then
-              if vim.bo.buftype ~= 'prompt' and require('helpers').has_words_before() then
-                cmp.complete()
-              else
-                fallback()
-              end
-            end
-          end,
-          ['<C-k>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-j>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete({}),
-          -- ['<Esc>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-        }),
-      })
-    end,
+        ['<Tab>'] = {
+          'select_next', 'fallback'
+        },
+        ['<S-Tab>'] = {
+          'select_prev', 'fallback'
+        },
+      },
+      completion = {
+        menu = {
+          border = "rounded",
+        },
+        documentation = {
+          window = {
+            border = "rounded",
+          },
+        },
+        list = {
+          selection = {
+            preselect = false,
+            auto_insert = true,
+          }
+        }
+      },
+    },
   },
   {
     "neovim/nvim-lspconfig",
     lazy = true,
-    dependencies = { "williamboman/mason.nvim", "hrsh7th/nvim-cmp" },
+    dependencies = { "williamboman/mason.nvim" },
     config = function()
       local lspconfig = require('lspconfig')
       lspconfig.lua_ls.setup({
@@ -369,11 +359,11 @@ return {
           },
         },
       })
-      lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
-        'force',
-        lspconfig.util.default_config.capabilities,
-        require("cmp_nvim_lsp").default_capabilities()
-      )
+      -- lspconfig.util.default_config.capabilities = vim.tbl_deep_extend(
+      --   'force',
+      --   lspconfig.util.default_config.capabilities,
+      --   require("cmp_nvim_lsp").default_capabilities()
+      -- )
     end
   },
   {
@@ -446,7 +436,7 @@ return {
         NvimTree = true,
       },
     },
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+    version = '^1.0.0',
   },
   {
     'RRethy/vim-illuminate',
@@ -459,7 +449,7 @@ return {
   },
   {
     "nvim-tree/nvim-tree.lua",
-    version = "^1.3.0",
+    version = "^1.13.0",
     lazy = true,
     cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle", },
     dependencies = {
